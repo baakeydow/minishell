@@ -20,8 +20,8 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <signal.h>
-# define CLEAR "\033c"
-# define RESET "\x1B[0m"
+# define CLEAR ft_putstr("\033c");
+# define RESET ft_putstr("\x1B[0m");
 
 typedef struct          s_val
 {
@@ -36,6 +36,10 @@ typedef struct          s_env
     struct s_env        *next;
 }                       t_env;
 
+void			print_env(t_env *e);
+char	       	*bin_to_path(char *path, char *bin);
+char	       	*find_path_to_bin(char *cmd, t_env *e);
+
 t_val           *val_new(char *value);
 t_env			*key_new(char *key, t_val *v);
 t_val           *path_to_list(char *str);
@@ -46,7 +50,6 @@ void			push_back_list_en(t_env *b_list, t_env *new);
 int				fields(char **env);
 int				is_dir(char *str);
 void			print_that_tab(char **tab);
-void			print_that_list(t_env *e);
 char			*ft_strcut(char *str, char c);
 
 #endif

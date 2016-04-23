@@ -64,20 +64,3 @@ void			print_that_tab(char **tab)
 	while (tab[i])
 		ft_putendl(tab[i++]);
 }
-
-void			print_that_list(t_env *e)
-{
-	while (e)
-	{
-		ft_putstr(e->key);
-		while (e->value)
-		{
-			ft_putstr(e->value->entry);
-			if (e->value->next)
-				ft_putchar(':');
-			e->value = e->value->next;
-		}
-		ft_putchar('\n');
-		e = e->next;
-	}
-}
