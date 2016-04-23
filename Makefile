@@ -20,6 +20,10 @@ SRCDIR = src/
 GNLDIR = gnl/
 
 SRC = $(SRCDIR)main.c \
+		$(SRCDIR)lists.c \
+		$(SRCDIR)utils.c \
+		$(SRCDIR)tools.c \
+		$(SRCDIR)builtins.c \
 		$(GNLDIR)get_next_line.c \
 
 INC = headers

@@ -14,10 +14,39 @@
 # define MINISHELL_H
 # include "get_next_line.h"
 # include <unistd.h>
+# include <stdlib.h>
 # include <fcntl.h>
 # include <dirent.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <signal.h>
 # define CLEAR "\033c"
 # define RESET "\x1B[0m"
+
+typedef struct          s_val
+{
+    char                *entry;
+    struct s_val        *next;
+}                       t_val;
+
+typedef struct          s_env
+{
+    char                *key;
+    struct s_val        *value;
+    struct s_env        *next;
+}                       t_env;
+
+t_val           *val_new(char *value);
+t_env			*key_new(char *key, t_val *v);
+t_val           *path_to_list(char *str);
+t_env           *env_to_list(char **env);
+void			push_back_list_val(t_val *b_list, t_val *new);
+void			push_back_list_en(t_env *b_list, t_env *new);
+
+int				fields(char **env);
+int				is_dir(char *str);
+void			print_that_tab(char **tab);
+void			print_that_list(t_env *e);
+char			*ft_strcut(char *str, char c);
 
 #endif
