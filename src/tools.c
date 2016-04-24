@@ -41,7 +41,7 @@ int				close_dir(DIR *dir)
 {
 	if (dir && closedir(dir) == -1)
 	{
-		ft_putstr("Error while closing dir");
+		ft_putstr_fd("Error while closing dir", 2);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -92,22 +92,14 @@ void			print_that_tab(char **tab)
 
 void			print_env(t_data *d)
 {
-	print_that_tab(d->env);
+	t_env	*tmp;
+
+	**tmp = d->e;
+	print_that_tab(list_to_tab(d->e));
+	d->e = *tmp;
 }
 
-void			print_that_list(t_data *d)
+int				ft_list_size(t_env *b)
 {
-	while (d->e)
-	{
-		ft_putstr_fd(d->e->key, 2);
-		while (d->e->value)
-		{
-			ft_putstr_fd(d->e->value->entry, 2);
-			if (d->e->value->next)
-				ft_putchar_fd(':', 2);
-			d->e->value = d->e->value->next;
-		}
-		ft_putchar_fd('\n', 2);
-		d->e = d->e->next;
-	}
+	return (b) ? (ft_list_size(b->next) + 1) : (0);
 }

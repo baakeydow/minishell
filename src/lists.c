@@ -12,36 +12,6 @@
 
 #include "minishell.h"
 
-void					push_back_list_val(t_val *b_list, t_val *new)
-{
-	t_val		*tmp;
-
-	if (b_list == NULL)
-		b_list = new;
-	else
-	{
-		tmp = b_list;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-}
-
-void					push_back_list_en(t_env *b_list, t_env *new)
-{
-	t_env		*tmp;
-
-	if (b_list == NULL)
-		b_list = new;
-	else
-	{
-		tmp = b_list;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-}
-
 t_val					*val_new(char *value)
 {
 	t_val			*node;
@@ -65,7 +35,21 @@ t_env					*key_new(char *key, t_val *v)
 	return (node);
 }
 
-t_env               *env_to_list(char **env)
+t_val         		     *path_to_list(char *str)
+{
+    t_val           *v;
+    char            **tab;
+    int             j;
+
+    tab = ft_strsplit(ft_strchr(ft_strdup(str), '=') + 1, ':');
+    v = val_new(tab[0]);
+    j = 1;
+    while (tab[j])
+        push_back_list_val(v, val_new(tab[j++]));
+    return (v);
+}
+
+t_env             	  *env_to_list(char **env)
 {
     t_env           *e;
     t_val           *v;

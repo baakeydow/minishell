@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-// char  **list_to_tab(t_env *e)
-
 struct s_builtins	tab[TAB_SIZE] = {{"cd", &print_env}, {"env", &print_env}};
 
 int					handle(t_builtins tab[TAB_SIZE], t_data *d, char **av)

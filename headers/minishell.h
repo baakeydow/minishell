@@ -52,12 +52,12 @@ typedef struct          s_builtins
 }				        t_builtins;
 
 struct s_builtins		tab[TAB_SIZE];
-int	            		handle(t_builtins tab[TAB_SIZE], t_data *d, char **av);
 
-void					forked(t_data *d);
-void	       			launch_it(char *asked, t_data *d);
 char					*bin_to_path(char *path, char *bin);
 char					*find_path_to_bin(char *cmd, t_env *e);
+int	            		handle(t_builtins tab[TAB_SIZE], t_data *d, char **av);
+void	       			launch_it(char *asked, t_data *d);
+void					forked(t_data *d);
 
 void					print_env(t_data *d);
 
@@ -66,15 +66,18 @@ t_env					*key_new(char *key, t_val *v);
 t_val					*path_to_list(char *str);
 t_env					*env_to_list(char **env);
 t_data		    		*new_data(int ac, char **av, char **environ);
+
+char 					**list_to_tab(t_env *list);
+void					error_handler(char *str, int num);
 void					push_back_list_val(t_val *b_list, t_val *new);
 void					push_back_list_en(t_env *b_list, t_env *new);
 
-void					error_handler(char *str, int num);
 char					*check_absolute(char *cmd);
+int     				ft_list_size(t_env *b);
 int						fields(char **env);
 int						is_dir(char *str);
+int		           		close_dir(DIR *dir);
 void					print_that_tab(char **tab);
-void					print_that_list(t_data *d);
 char					*ft_strcut(char *str, char c);
 char					is_in(char *fmt, char c);
 

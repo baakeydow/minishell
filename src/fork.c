@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+char			     	*bin_to_path(char *path, char *bin)
+{
+	size_t	len1;
+	size_t	len2;
+	char	*name;
+
+	if (!path)
+		return (NULL);
+	len1 = ft_strlen(path);
+	len2 = ft_strlen(bin);
+	if (!(name = ft_strnew((len1 + len2) + 1)))
+		return (NULL);
+	ft_memcpy(name, path, len1);
+	name[len1] = '/';
+	ft_memcpy((name + len1) + 1, bin, len2);
+	return (name);
+}
+
 char				*find_path_to_bin(char *cmd, t_env *e)
 {
 	DIR				*dir;
@@ -27,9 +45,12 @@ char				*find_path_to_bin(char *cmd, t_env *e)
 			while (e->value)
 			{
 				if ((dir = opendir(e->value->entry)))
+				{
 					while ((f = readdir(dir)))
 						if ((ft_strcmp(f->d_name, cmd) == 0))
 							return (bin_to_path(e->value->entry, cmd));
+					close_dir(dir);
+				}
 				e->value = e->value->next;
 			}
 		e = e->next;
