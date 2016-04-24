@@ -66,21 +66,15 @@ void					push_back_list_en(t_env *b_list, t_env *new)
 	}
 }
 
-void			print_that_list(t_data *d)
+static char				**fill_it_in(char **tab, int i, t_val *value)
 {
-	while (d->e)
+	while (value)
 	{
-		ft_putstr_fd(d->e->key, 2);
-		while (d->e->value)
-		{
-			ft_putstr_fd(d->e->value->entry, 2);
-			if (d->e->value->next)
-				ft_putchar_fd(':', 2);
-			d->e->value = d->e->value->next;
-		}
-		ft_putchar_fd('\n', 2);
-		d->e = d->e->next;
+		tab[i] = ft_strjoin(tab[i], ":");
+		tab[i] = ft_strjoin(tab[i], value->entry);
+		value = value->next;
 	}
+	return (tab);
 }
 
 char		          	**list_to_tab(t_env *e)
@@ -91,7 +85,6 @@ char		          	**list_to_tab(t_env *e)
 
     i = 0;
     size = ft_list_size(e);
-    tab = NULL;
     if (!(tab = (char **)malloc(sizeof(char *) * (size + 1))))
         return (NULL);
     tab[size] = NULL;
@@ -101,12 +94,8 @@ char		          	**list_to_tab(t_env *e)
         {
             tab[i] = ft_strjoin(e->key, e->value->entry);
             e->value = e->value->next;
-            while (e->value)
-            {
-                tab[i] = ft_strjoin(tab[i], ":");
-                tab[i] = ft_strjoin(tab[i], e->value->entry);
-                e->value = e->value->next;
-            }
+			if (e->value)
+				tab = fill_it_in(tab, i, e->value);
         }
         else
             tab[i] = ft_strdup(e->key);

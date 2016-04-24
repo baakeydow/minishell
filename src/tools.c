@@ -92,11 +92,7 @@ void			print_that_tab(char **tab)
 
 void			print_env(t_data *d)
 {
-	t_env	*tmp;
-
-	**tmp = d->e;
-	print_that_tab(list_to_tab(d->e));
-	d->e = *tmp;
+	print_that_tab(d->env);
 }
 
 int				ft_list_size(t_env *b)
