@@ -12,6 +12,31 @@
 
 #include "minishell.h"
 
+char			is_in(char *fmt, char c)
+{
+	int		i;
+
+	i = 0;
+	if (!fmt)
+		return (0);
+	while (fmt[i])
+	{
+		if (fmt[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char				*check_absolute(char *cmd)
+{
+	struct stat		s;
+
+	if (stat(cmd, &s) != 0)
+		error_handler(cmd, 2);
+	return (cmd);
+}
+
 int				close_dir(DIR *dir)
 {
 	if (dir && closedir(dir) == -1)

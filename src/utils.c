@@ -43,3 +43,27 @@ char				*bin_to_path(char *path, char *bin)
 	ft_memcpy((name + len1) + 1, bin, len2);
 	return (name);
 }
+
+void				error_handler(char *str, int num)
+{
+	if (num == 0)
+	{
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(" : Error Too Many Arguments !\n", 2);
+		exit(1);
+	}
+	else if (num == 1)
+	{
+		ft_putstr_fd("minishell: command not found: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putchar_fd('\n', 2);
+		exit(1);
+	}
+	else if (num == 2)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(" : No such file or directory \n", 2);
+		exit(1);
+	}
+}

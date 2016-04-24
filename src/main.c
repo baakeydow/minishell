@@ -19,6 +19,8 @@ char				*find_path_to_bin(char *cmd, t_env *e)
 
 	dir = NULL;
 	f = NULL;
+	if (is_in(cmd, '/'))
+		return (check_absolute(cmd));
 	while (e)
 	{
 		if (ft_strcmp(e->key, "PATH=") == 0)
@@ -35,35 +37,46 @@ char				*find_path_to_bin(char *cmd, t_env *e)
 	return (NULL);
 }
 
-int					main(int ac, char **av, char **environ)
+void				launch_it(char *asked, t_env *e, char **environ)
 {
 	char	**cmd;
+	char	*path;
+
+	cmd = ft_strsplit(asked, ' ');
+	if (!(path = find_path_to_bin(ft_strtrim(cmd[0]), e)))
+		error_handler(cmd[0], 1);
+	else
+		execve(path, cmd, environ);
+}
+
+void				forked(t_env *e, char **environ)
+{
 	char	*asked;
-	t_env	*e;
 	pid_t	c_pid;
 	pid_t	f_pid;
 
-	CLEAR;
-	if (ac != 1)
-	{
-		ft_putstr_fd(av[0], 2);
-		ft_putstr_fd(" Error Too Many Arguments !", 2);
-		exit(1);
-	}
-	ft_putstr("$> ");
-	e = env_to_list(environ);
+	f_pid = 0;
 	while (get_next_line(0, &asked) > 0)
 	{
 		c_pid = fork();
 		if (c_pid == 0)
-		{
-			cmd = ft_strsplit(asked, ' ');
-			execve(find_path_to_bin(ft_strtrim(cmd[0]), e), cmd, environ);
-		}
+			launch_it(asked, e, environ);
 		else
 			while (f_pid != c_pid)
 				f_pid = wait(NULL);
 		ft_putstr("$> ");
 	}
+}
+
+int					main(int ac, char **av, char **environ)
+{
+	t_env	*e;
+
+	CLEAR;
+	if (ac != 1)
+		error_handler(av[0], 0);
+	ft_putstr("$> ");
+	e = env_to_list(environ);
+	forked(e, environ);
 	return (0);
 }

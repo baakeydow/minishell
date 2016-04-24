@@ -36,6 +36,7 @@ typedef struct          s_env
     struct s_env        *next;
 }                       t_env;
 
+void			forked(t_env *e, char **environ);
 void			print_env(t_env *e);
 char	       	*bin_to_path(char *path, char *bin);
 char	       	*find_path_to_bin(char *cmd, t_env *e);
@@ -47,9 +48,12 @@ t_env           *env_to_list(char **env);
 void			push_back_list_val(t_val *b_list, t_val *new);
 void			push_back_list_en(t_env *b_list, t_env *new);
 
+void			error_handler(char *str, int num);
+char			*check_absolute(char *cmd);
 int				fields(char **env);
 int				is_dir(char *str);
 void			print_that_tab(char **tab);
 char			*ft_strcut(char *str, char c);
+char			is_in(char *fmt, char c);
 
 #endif
