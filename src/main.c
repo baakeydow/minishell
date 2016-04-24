@@ -12,24 +12,6 @@
 
 #include "minishell.h"
 
-char				*bin_to_path(char *path, char *bin)
-{
-	size_t	len1;
-	size_t	len2;
-	char	*name;
-
-	if (!path)
-		return (NULL);
-	len1 = ft_strlen(path);
-	len2 = ft_strlen(bin);
-	if (!(name = ft_strnew((len1 + len2) + 1)))
-		return (NULL);
-	ft_memcpy(name, path, len1);
-	name[len1] = '/';
-	ft_memcpy((name + len1) + 1, bin, len2);
-	return (name);
-}
-
 char				*find_path_to_bin(char *cmd, t_env *e)
 {
 	DIR				*dir;
@@ -62,9 +44,13 @@ int					main(int ac, char **av, char **environ)
 	pid_t	f_pid;
 
 	CLEAR;
-	if (ac == 1)
-		ft_putstr(av[0]);
-	ft_putchar_fd('\n', 2);
+	if (ac != 1)
+	{
+		ft_putstr_fd(av[0], 2);
+		ft_putstr_fd(" Error Too Many Arguments !", 2);
+		exit(1);
+	}
+	ft_putstr("$> ");
 	e = env_to_list(environ);
 	while (get_next_line(0, &asked) > 0)
 	{
@@ -74,8 +60,10 @@ int					main(int ac, char **av, char **environ)
 			cmd = ft_strsplit(asked, ' ');
 			execve(find_path_to_bin(ft_strtrim(cmd[0]), e), cmd, environ);
 		}
-		while (f_pid != c_pid)
-			f_pid = wait(NULL);
+		else
+			while (f_pid != c_pid)
+				f_pid = wait(NULL);
+		ft_putstr("$> ");
 	}
 	return (0);
 }
