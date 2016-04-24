@@ -20,6 +20,7 @@ SRCDIR = src/
 GNLDIR = gnl/
 
 SRC = $(SRCDIR)main.c \
+		$(SRCDIR)fork.c \
 		$(SRCDIR)lists.c \
 		$(SRCDIR)utils.c \
 		$(SRCDIR)tools.c \

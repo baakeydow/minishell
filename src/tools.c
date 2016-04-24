@@ -89,3 +89,25 @@ void			print_that_tab(char **tab)
 	while (tab[i])
 		ft_putendl(tab[i++]);
 }
+
+void			print_env(t_data *d)
+{
+	print_that_tab(d->env);
+}
+
+void			print_that_list(t_data *d)
+{
+	while (d->e)
+	{
+		ft_putstr_fd(d->e->key, 2);
+		while (d->e->value)
+		{
+			ft_putstr_fd(d->e->value->entry, 2);
+			if (d->e->value->next)
+				ft_putchar_fd(':', 2);
+			d->e->value = d->e->value->next;
+		}
+		ft_putchar_fd('\n', 2);
+		d->e = d->e->next;
+	}
+}

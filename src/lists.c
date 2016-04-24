@@ -89,3 +89,16 @@ t_env               *env_to_list(char **env)
     }
     return (e);
 }
+
+t_data				*new_data(int ac, char **av, char **environ)
+{
+	t_data		*d;
+
+	if (!(d = (t_data *)malloc(sizeof(t_data))))
+		return (NULL);
+	d->ac = ac;
+	d->av = av;
+	d->env = environ;
+	d->e = env_to_list(environ);
+	return (d);
+}
