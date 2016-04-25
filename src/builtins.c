@@ -35,32 +35,23 @@ static int         setenv_tpl(char *key, char *value, int overwrite, t_data *d)
         while (d->e)
         {
             if (ft_strcmp(d->e->key, key) == 0 && overwrite == 1)
-            {
-                ft_putstr_fd(d->e->value->entry, 1);
                 d->e->value->entry = ft_strdup(value);
-                ft_putstr_fd(d->e->value->entry, 1);
-                ft_putstr_fd("cool", 1);
-            }
             d->e = d->e->next;
         }
         while (d->e->prev)
             d->e = d->e->prev;
     }
     else
-    {
         push_back_list_en(&(d->e), key_new(key, val_new(value)));
-    }
     d->env = list_to_tab(d->e);
-    // d->e = env_to_list(d->env);
     return (1);
 }
 
 void           set_env(t_data *d, char **av)
 {
-    ft_putstr_fd(av[1], 2);
     if ((!av[0] || !av[1] || !av[2] || ft_strcmp(ft_strtrim(av[0]), "setenv") != 0) ||
                 (ft_atoi(av[2]) != 1 && ft_atoi(av[2]) != 0))
-        ft_putstr_fd("please rtfm man !\n", 2);
+        ft_putstr_fd("please rtfm !\n", 2);
     else
         setenv_tpl(ft_strcut(ft_strdup(av[1]), '='), ft_strchr(ft_strdup(av[1]), '=') + 1, ft_atoi(av[2]), d);
 }
