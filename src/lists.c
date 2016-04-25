@@ -20,6 +20,7 @@ t_val					*val_new(char *value)
 		return (NULL);
 	node->entry = value;
 	node->next = NULL;
+	node->prev = NULL;
 	return (node);
 }
 
@@ -32,6 +33,7 @@ t_env					*key_new(char *key, t_val *v)
 	node->key = key;
     node->value = v;
 	node->next = NULL;
+	node->prev = NULL;
 	return (node);
 }
 
@@ -45,7 +47,7 @@ t_val         		     *path_to_list(char *str)
     v = val_new(tab[0]);
     j = 1;
     while (tab[j])
-        push_back_list_val(v, val_new(tab[j++]));
+        push_back_list_val(&v, val_new(tab[j++]));
     return (v);
 }
 
@@ -68,7 +70,7 @@ t_env             	  *env_to_list(char **env)
         if (!e)
             e = key_new(ft_strcut(ft_strdup(env[i]), '='), v);
         else
-            push_back_list_en(e, key_new(ft_strcut(ft_strdup(env[i]), '='), v));
+            push_back_list_en(&e, key_new(ft_strcut(ft_strdup(env[i]), '='), v));
         i++;
     }
     return (e);

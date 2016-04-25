@@ -28,6 +28,7 @@ typedef struct          s_val
 {
     char                *entry;
     struct s_val        *next;
+    struct s_val        *prev;
 }                       t_val;
 
 typedef struct          s_env
@@ -35,6 +36,7 @@ typedef struct          s_env
     char                *key;
     struct s_val        *value;
     struct s_env        *next;
+    struct s_env        *prev;
 }                       t_env;
 
 typedef struct          s_data
@@ -48,7 +50,7 @@ typedef struct          s_data
 typedef struct          s_builtins
 {
     char		        *cmd;
-	void		        (*f)(struct s_data *d);
+	void		        (*f)(struct s_data *d, char **av);
 }				        t_builtins;
 
 struct s_builtins		tab[TAB_SIZE];
@@ -59,7 +61,8 @@ int	            		handle(t_builtins tab[TAB_SIZE], t_data *d, char **av);
 void	       			launch_it(char *asked, t_data *d);
 void					forked(t_data *d);
 
-void					print_env(t_data *d);
+void			        print_env(t_data *d, char **av);
+void                    set_env(t_data *d, char **av);
 
 t_val					*val_new(char *value);
 t_env					*key_new(char *key, t_val *v);
@@ -69,8 +72,8 @@ t_data		    		*new_data(int ac, char **av, char **environ);
 
 char 					**list_to_tab(t_env *list);
 void					error_handler(char *str, int num);
-void					push_back_list_val(t_val *b_list, t_val *new);
-void					push_back_list_en(t_env *b_list, t_env *new);
+void					push_back_list_val(t_val **b_list, t_val *new);
+void					push_back_list_en(t_env **b_list, t_env *new);
 
 char					*check_absolute(char *cmd);
 int     				ft_list_size(t_env *b);

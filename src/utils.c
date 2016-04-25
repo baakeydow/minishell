@@ -36,32 +36,34 @@ void		      		error_handler(char *str, int num)
 	}
 }
 
-void					push_back_list_val(t_val *b_list, t_val *new)
+void					push_back_list_val(t_val **b_list, t_val *new)
 {
 	t_val		*tmp;
 
-	if (b_list == NULL)
-		b_list = new;
+	if (*b_list == NULL)
+		*b_list = new;
 	else
 	{
-		tmp = b_list;
+		tmp = *b_list;
 		while (tmp->next)
 			tmp = tmp->next;
+		new->prev = tmp;
 		tmp->next = new;
 	}
 }
 
-void					push_back_list_en(t_env *b_list, t_env *new)
+void					push_back_list_en(t_env **b_list, t_env *new)
 {
 	t_env		*tmp;
 
-	if (b_list == NULL)
-		b_list = new;
+	if (*b_list == NULL)
+		*b_list = new;
 	else
 	{
-		tmp = b_list;
+		tmp = *b_list;
 		while (tmp->next)
 			tmp = tmp->next;
+		new->prev = tmp;
 		tmp->next = new;
 	}
 }

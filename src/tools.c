@@ -90,8 +90,9 @@ void			print_that_tab(char **tab)
 		ft_putendl(tab[i++]);
 }
 
-void			print_env(t_data *d)
+void			print_env(t_data *d, char **av)
 {
+	(void)av;
 	print_that_tab(d->env);
 }
 
