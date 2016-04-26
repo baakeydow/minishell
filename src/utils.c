@@ -81,9 +81,9 @@ static char				**fill_it_in(char **tab, int i, t_val *value)
 
 char		          	**list_to_tab(t_env *e)
 {
-    char       **tab;
-    int        size;
-    int        i;
+    char		**tab;
+    int			size;
+    int			i;
 
     i = 0;
     size = ft_list_size(e);

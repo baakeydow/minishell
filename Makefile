@@ -25,6 +25,8 @@ SRC = $(SRCDIR)main.c \
 		$(SRCDIR)utils.c \
 		$(SRCDIR)tools.c \
 		$(SRCDIR)builtins.c \
+		$(SRCDIR)setenv.c \
+		$(SRCDIR)cd.c \
 		$(GNLDIR)get_next_line.c \
 
 INC = headers
